@@ -8,24 +8,12 @@
 	</div>
 	<div class="space-y-4">
 		<div class="flex flex-col items-center">
-			<img
-				src="/placeholder.svg"
-				alt="Quiz Image"
-				class="w-48 h-48 object-cover rounded-full"
-				width="200"
-				height="200"
-				style="aspect-ratio: 200 / 200; object-fit: cover;"
-			/>
 			<p class="mt-4 text-center text-gray-600">
 				Test your knowledge on various topics and see how well you do!
 			</p>
 		</div>
 	</div>
 	<div class="mt-6">
-		<button
-			class="inline-flex items-center justify-center text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
-		>
-			Start Quiz
-		</button>
+		<a href="/1" role="button" class="btn btn-accent w-full"> Start Quiz </a>
 	</div>
 </div>
