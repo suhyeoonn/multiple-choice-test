@@ -1,8 +1,9 @@
 <script lang="ts">
 	import OptionItem from '$lib/components/OptionItem.svelte';
 	import { LocalStorage } from '$lib/models/LocalStorage.js';
+	import { questionsStore } from '$lib/store/questions.js';
 
-	export let data;
+	const data = $questionsStore[0];
 
 	let selectedIndex: number;
 

@@ -1,3 +1,11 @@
+<script lang="ts">
+	import { questionsStore } from '$lib/store/questions.js';
+
+	export let data;
+
+	questionsStore.set(data.questions);
+</script>
+
 <!--
 // v0 by Vercel.
 // https://v0.dev/t/5SQKsheDxWT
