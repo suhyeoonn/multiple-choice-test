@@ -1,15 +1,17 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import OptionItem from '$lib/components/OptionItem.svelte';
 	import { LocalStorage } from '$lib/models/LocalStorage.js';
-	import { questionsStore } from '$lib/store/questions.js';
 
-	const data = $questionsStore[0];
+	export let data;
 
 	let selectedIndex: number;
 
-	const onSubmit = (e: Event) => {
-		e.preventDefault();
+	const onSubmit = () => {
 		LocalStorage.save(data.id, selectedIndex);
+		return async ({ update }) => {
+			await update();
+		};
 	};
 </script>
 
@@ -24,7 +26,7 @@
 		</h2>
 		<div class="text-red-500 font-bold text-xl">10:00</div>
 	</div>
-	<form class="space-y-4" on:submit={onSubmit}>
+	<form class="space-y-4" method="post" use:enhance={onSubmit}>
 		{#each data.options as option, i}
 			<OptionItem id={i.toString()} {option} bind:value={selectedIndex} />
 		{/each}
