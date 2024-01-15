@@ -33,7 +33,9 @@
 			<OptionItem id={i.toString()} {option} bind:value={selectedIndex} />
 		{/each}
 		<div class="mt-6">
-			<button class="btn btn-accent w-full" disabled={selectedIndex === -1}>Submit</button>
+			<button class="btn btn-accent w-full" disabled={selectedIndex === -1}>
+				{data.isLast ? 'View results' : 'Submit'}
+			</button>
 		</div>
 	</form>
 </div>

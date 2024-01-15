@@ -2,8 +2,10 @@ import { questions } from '$lib/questions/test1';
 import { redirect } from '@sveltejs/kit';
 
 export function load({ params }) {
+	const id = Number(params.id);
 	return {
-		...questions[Number(params.id) - 1]
+		...questions[id - 1],
+		isLast: id === questions.length
 	};
 }
 
