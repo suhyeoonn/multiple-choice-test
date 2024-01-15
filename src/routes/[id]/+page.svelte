@@ -2,12 +2,13 @@
 	import { enhance } from '$app/forms';
 	import OptionItem from '$lib/components/OptionItem.svelte';
 	import { LocalStorage } from '$lib/models/LocalStorage.js';
+	import type { SubmitFunction } from '@sveltejs/kit';
 
 	export let data;
 
 	let selectedIndex: number;
 
-	const onSubmit = () => {
+	const onSubmit: SubmitFunction = () => {
 		LocalStorage.save(data.id, selectedIndex);
 		return async ({ update }) => {
 			await update();
