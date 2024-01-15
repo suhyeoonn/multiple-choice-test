@@ -6,11 +6,12 @@
 
 	export let data;
 
-	let selectedIndex: number;
+	let selectedIndex: number = -1;
 
 	const onSubmit: SubmitFunction = () => {
 		LocalStorage.save(data.id, selectedIndex);
 		return async ({ update }) => {
+			selectedIndex = -1;
 			await update();
 		};
 	};
@@ -32,7 +33,7 @@
 			<OptionItem id={i.toString()} {option} bind:value={selectedIndex} />
 		{/each}
 		<div class="mt-6">
-			<button class="btn btn-accent w-full" disabled={!selectedIndex}>Submit</button>
+			<button class="btn btn-accent w-full" disabled={selectedIndex === -1}>Submit</button>
 		</div>
 	</form>
 </div>
