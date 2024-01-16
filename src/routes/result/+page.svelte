@@ -1,17 +1,34 @@
 <script lang="ts">
 	import { LocalStorage } from '$lib/models/LocalStorage';
+	import { onMount } from 'svelte';
 
+	interface result {
+		score: number;
+		isPass: boolean;
+	}
+
+	let data: result;
 	const fetchResult = async () => {
-		// await fetch('/result', {
-		//     method: 'POST',
-		//     headers: {'Content-Type:application/json'},
-		//     body: LocalStorage.getSelectedAnswers()
-		// })
+		try {
+			const res = await fetch('/result', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: LocalStorage.getSelectedAnswers()
+			});
 
-		console.log(LocalStorage.getSelectedAnswers());
-		setTimeout(() => new Promise((resolve) => resolve(true)), 2000);
+			data = await res.json();
+			console.log(LocalStorage.getSelectedAnswers());
+		} catch (e) {
+			alert('network error');
+			console.error(e);
+		}
 	};
-	let promise = fetchResult();
+
+	onMount(() => {
+		fetchResult();
+	});
+
+	$: textColor = data?.isPass ? 'text-success' : 'text-error';
 </script>
 
 <!--
@@ -20,18 +37,26 @@
 -->
 
 <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
-	{#await promise}
-		Loading...
-	{:then data}
-		<div class="flex justify-center items-center">
-			<h2 class="mb-6 text-2xl font-bold text-gray-700">Result</h2>
+	{#if !data}
+		loading...
+	{:else}
+		<div class="flex justify-between items-center">
+			<h2 class="mb-6 text-2xl font-bold text-gray-700">Test Result</h2>
 		</div>
 		<div class="space-y-4">
-			<div class="flex flex-col items-center">
-				<p class="mt-4 text-center text-gray-600">
-					Test your knowledge on various topics and see how well you do!
-				</p>
+			<div class="flex justify-between items-center">
+				<h3 class="text-xl font-bold text-gray-700">Score:</h3>
+				<div class="{textColor} font-bold text-xl" class:text-green-500={data.isPass}>
+					{data.score}/100
+				</div>
+			</div>
+			<div class="flex justify-between items-center">
+				<h3 class="text-xl font-bold text-gray-700">Status:</h3>
+				<div class="{textColor} font-bold text-xl">{data.isPass ? 'Passed' : 'Failed'}</div>
 			</div>
 		</div>
-	{/await}
+		<div class="mt-6">
+			<a href="/" role="button" class="btn btn-accent w-full"> Try Again </a>
+		</div>
+	{/if}
 </div>
